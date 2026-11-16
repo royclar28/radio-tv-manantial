@@ -1,17 +1,20 @@
 ---
 // AdminModal.astro
 ---
-<div id="adminModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-celestial-900 border border-white/20 rounded-3xl max-w-xl w-full max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+<div id="adminModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-celestial-900 border border-white/20 rounded-3xl max-w-xl w-full max-h-[92vh] overflow-hidden flex flex-col shadow-2xl">
         
+        <!-- Header del Modal -->
         <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-celestial-950/70">
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-xs">
                     <i class="fa-solid fa-key"></i>
                 </div>
                 <div>
-                    <h3 class="font-display font-black text-sm text-white">Panel del Director</h3>
-                    <p class="text-[10px] text-slate-400">Control de Publicaciones y Avisos</p>
+                    <h3 class="font-display font-black text-sm text-white">Panel de la Dirección</h3>
+                    <div id="cloudStatusBadge" class="text-[10px] text-slate-400 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Verificando estado...
+                    </div>
                 </div>
             </div>
             <button type="button" onclick="window.closeAdminModal()" class="text-slate-400 hover:text-white p-1 cursor-pointer">
@@ -19,14 +22,28 @@
             </button>
         </div>
 
-        <!-- Formulario de Login si no está autenticado -->
+        <!-- Formulario de Inicio de Sesión si no está autenticado -->
         <div id="adminLoginForm" class="p-6 space-y-4">
-            <p class="text-xs text-slate-300">Ingresa la clave de administración para redactar noticias, devocionales o modificar avisos de la radio.</p>
-            <div>
-                <label class="block text-xs font-bold text-slate-300 mb-1">Contraseña de Acceso:</label>
-                <input type="password" id="adminPassInput" placeholder="••••••••" class="w-full px-3 py-2 bg-celestial-950 border border-white/15 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400">
+            <div class="bg-celestial-950/60 p-3.5 rounded-2xl border border-white/10 text-xs text-slate-300 space-y-1">
+                <p class="font-bold text-amber-300 flex items-center gap-1.5">
+                    <i class="fa-solid fa-shield-halved"></i> Acceso Administrativo
+                </p>
+                <p class="text-[11px] text-slate-400">
+                    Ingresa con tu cuenta de Supabase o utiliza la contraseña de acceso directo para redactar devocionales, publicar noticias o cambiar el cintillo.
+                </p>
             </div>
-            <button type="button" onclick="window.authenticateAdmin()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2.5 rounded-xl text-xs transition touch-manipulation cursor-pointer">
+
+            <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1">Correo Electrónico (Opcional en modo local):</label>
+                <input type="email" id="adminEmailInput" placeholder="director@manantial907fm.com" class="w-full px-3 py-2.5 bg-celestial-950 border border-white/15 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1">Contraseña:</label>
+                <input type="password" id="adminPassInput" placeholder="••••••••" class="w-full px-3 py-2.5 bg-celestial-950 border border-white/15 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400">
+            </div>
+
+            <button type="button" onclick="window.authenticateAdmin()" class="w-full bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-black py-2.5 rounded-xl text-xs transition touch-manipulation cursor-pointer">
                 Ingresar al Panel
             </button>
         </div>
@@ -61,19 +78,19 @@
                     <label class="block text-[11px] font-bold text-slate-300 mb-1">Contenido de la Reflexión:</label>
                     <textarea id="newPostContent" rows="4" placeholder="Escribe aquí el texto que leerán los oyentes en la web..." class="w-full px-3 py-2 bg-celestial-900 border border-white/15 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none"></textarea>
                 </div>
-                <button type="button" onclick="window.saveNewPost()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-2 rounded-xl text-xs transition touch-manipulation cursor-pointer">
-                    <i class="fa-solid fa-floppy-disk mr-1"></i> Publicar en la Página Web
+                <button type="button" onclick="window.saveNewPost()" class="w-full bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-black py-2.5 rounded-xl text-xs transition touch-manipulation cursor-pointer flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Publicar en la Emisora
                 </button>
             </div>
 
             <!-- Modificar Aviso de Marquesina Superior -->
             <div class="bg-celestial-950 p-4 rounded-2xl border border-white/10 space-y-2">
                 <h4 class="font-black text-xs text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <i class="fa-solid fa-bullhorn"></i> Aviso Superior de Última Hora
+                    <i class="fa-solid fa-bullhorn"></i> Aviso Superior de Última Hora (Cintillo)
                 </h4>
                 <input type="text" id="adminMarqueeInput" placeholder="Aviso visible en la barra superior..." class="w-full px-3 py-2 bg-celestial-900 border border-white/15 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-400">
-                <button type="button" onclick="window.saveMarqueeText()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-black py-2 rounded-xl text-xs transition touch-manipulation cursor-pointer">
-                    Actualizar Aviso
+                <button type="button" onclick="window.saveMarqueeText()" class="w-full bg-sky-600 hover:bg-sky-500 active:scale-95 text-white font-black py-2.5 rounded-xl text-xs transition touch-manipulation cursor-pointer flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-floppy-disk"></i> Actualizar Aviso de Cabina
                 </button>
             </div>
 
