@@ -1,0 +1,6 @@
+# Configuración de GitHub Linguist para reconocimiento de Astro y stack moderno
+*.astro linguist-detectable=true
+*.astro linguist-language=Astro
+*.js linguist-detectable=true
+*.css linguist-detectable=true
+*.sql linguist-detectable=true
