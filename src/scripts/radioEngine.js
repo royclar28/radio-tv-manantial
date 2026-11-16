@@ -11,6 +11,13 @@ const isCloudEnabled = Boolean(
 
 const supabase = isCloudEnabled ? createClient(supabaseUrl, supabaseAnonKey) : null;
 
+// Mapa de respaldo para categorías cuando no hay conexión a Supabase
+const CATEGORY_MAP = {
+    1: { name: 'Devocional', color: 'amber' },
+    2: { name: 'Noticia', color: 'sky' },
+    3: { name: 'Evento', color: 'purple' }
+};
+
 // Estado Global de la Plataforma
 window.AppRadioState = {
     streamUrl: "https://radio.conectarservidor.com:8014/stream",
@@ -24,6 +31,8 @@ window.AppRadioState = {
             id: 1,
             title: "Ríos de Agua Viva para Todas las Naciones",
             category: "Devocional",
+            badge_color: "amber",
+            author_name: "Dirección Manantial",
             verse: "Juan 7:38",
             content: "El Señor nos promete que aquellos que creen en Él, no pasarán sed jamás, sino que de su interior brotarán manantiales de esperanza y consuelo. Que la paz del Padre llene hoy tu hogar a través de nuestra sintonía.",
             created_at: new Date().toISOString()
@@ -32,6 +41,8 @@ window.AppRadioState = {
             id: 2,
             title: "Bienvenidos a Nuestra Señal Global Online",
             category: "Noticia",
+            badge_color: "sky",
+            author_name: "Dirección Manantial",
             verse: "Salmos 100:1",
             content: "Damos gracias a Dios por abrir los canales digitales para que la voz de Manantial 90.7 FM cruce fronteras. Si te encuentras fuera de Venezuela, salúdanos a través del botón de WhatsApp en cabina.",
             created_at: new Date().toISOString()
@@ -40,6 +51,8 @@ window.AppRadioState = {
             id: 3,
             title: "Programa Especial en Vivo: Sábados 5:00 PM",
             category: "Evento",
+            badge_color: "purple",
+            author_name: "Dirección Manantial",
             verse: "1 Tesalonicenses 5:17",
             content: "No te pierdas cada sábado nuestro programa central en directo de 5 a 6 de la tarde. Estaremos orando por tus peticiones familiares y de salud en tiempo real.",
             created_at: new Date().toISOString()
@@ -186,19 +199,36 @@ window.toggleMute = function() {
 };
 
 // ==============================================================================
-// SINCRONIZACIÓN SUPABASE (CLOUD) & LOCALSTORAGE (FALLBACK)
+// SINCRONIZACIÓN SUPABASE (CLOUD) CON TABLAS MAESTRAS (3FN)
 // ==============================================================================
 async function loadPostsFromSource() {
     if (supabase) {
         try {
             const { data, error } = await supabase
                 .from('posts')
-                .select('*')
+                .select(`
+                    id,
+                    title,
+                    verse,
+                    content,
+                    created_at,
+                    categories ( id, name, slug, badge_color ),
+                    profiles ( id, full_name, role )
+                `)
                 .order('created_at', { ascending: false });
 
             if (error) throw error;
             if (data && data.length > 0) {
-                window.AppRadioState.posts = data;
+                window.AppRadioState.posts = data.map(p => ({
+                    id: p.id,
+                    title: p.title,
+                    verse: p.verse,
+                    content: p.content,
+                    created_at: p.created_at,
+                    category: p.categories?.name || 'Devocional',
+                    badge_color: p.categories?.badge_color || 'amber',
+                    author_name: p.profiles?.full_name || 'Radio TV Manantial'
+                }));
                 window.renderPosts();
                 return;
             }
@@ -261,9 +291,10 @@ window.renderPosts = function() {
     container.innerHTML = '';
     window.AppRadioState.posts.forEach((post) => {
         const safeTitle = window.escapeHTML(post.title);
-        const safeCategory = window.escapeHTML(post.category);
+        const safeCategory = window.escapeHTML(post.category || 'Devocional');
         const safeVerse = window.escapeHTML(post.verse);
         const safeContent = window.escapeHTML(post.content);
+        const safeAuthor = window.escapeHTML(post.author_name || 'Radio TV Manantial');
         
         let dateFormatted = 'Hoy';
         if (post.created_at) {
@@ -278,9 +309,12 @@ window.renderPosts = function() {
             }
         }
 
-        let badgeColor = "bg-amber-500/20 text-amber-300 border-amber-500/30";
-        if (post.category === 'Noticia') badgeColor = "bg-sky-500/20 text-sky-300 border-sky-500/30";
-        if (post.category === 'Evento') badgeColor = "bg-purple-500/20 text-purple-300 border-purple-500/30";
+        const color = post.badge_color || (post.category === 'Noticia' ? 'sky' : (post.category === 'Evento' ? 'purple' : 'amber'));
+        const badgeColor = color === 'sky' 
+            ? "bg-sky-500/20 text-sky-300 border-sky-500/30" 
+            : (color === 'purple' 
+                ? "bg-purple-500/20 text-purple-300 border-purple-500/30" 
+                : "bg-amber-500/20 text-amber-300 border-amber-500/30");
 
         let adminButtons = '';
         if (window.AppRadioState.isAdmin) {
@@ -310,7 +344,7 @@ window.renderPosts = function() {
                     </p>
                 </div>
                 <div class="pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
-                    <span>Radio TV Manantial</span>
+                    <span class="truncate max-w-[150px]"><i class="fa-solid fa-user-pen mr-1 text-[9px] text-slate-400"></i> ${safeAuthor}</span>
                     <span>${dateFormatted}</span>
                 </div>
                 ${adminButtons}
@@ -364,7 +398,7 @@ window.openAdminModal = function() {
     const cloudBadge = document.getElementById('cloudStatusBadge');
     if (cloudBadge) {
         if (supabase) {
-            cloudBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> Nube Supabase Activa (Sincronizado)`;
+            cloudBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> Nube Supabase Activa (Esquema 3FN)`;
             cloudBadge.className = "text-[10px] font-bold text-emerald-400 flex items-center gap-1.5";
         } else {
             cloudBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400"></span> Modo Local (Sin credenciales en nube)`;
@@ -437,7 +471,7 @@ window.logoutAdmin = async function() {
 
 window.saveNewPost = async function() {
     const title = document.getElementById('newPostTitle')?.value.trim();
-    const category = document.getElementById('newPostCategory')?.value;
+    const categoryId = parseInt(document.getElementById('newPostCategory')?.value || '1', 10);
     const verse = document.getElementById('newPostVerse')?.value.trim();
     const content = document.getElementById('newPostContent')?.value.trim();
 
@@ -446,30 +480,31 @@ window.saveNewPost = async function() {
         return;
     }
 
-    const postPayload = {
-        title,
-        category,
-        verse: verse || null,
-        content
-    };
-
     if (supabase) {
         try {
+            const postPayload = {
+                title,
+                category_id: categoryId,
+                verse: verse || null,
+                content,
+                author_id: window.AppRadioState.adminUser?.id || null
+            };
+
             const { data, error } = await supabase
                 .from('posts')
                 .insert([postPayload])
                 .select();
 
             if (error) throw error;
-            window.showToast("¡Mensaje guardado en la nube con éxito!", "success");
+            window.showToast("¡Mensaje guardado en la base de datos (3FN) con éxito!", "success");
             loadPostsFromSource();
         } catch (err) {
             console.error("Error guardando post en Supabase:", err);
             window.showToast("Error en la nube. Guardando copia local...", "error");
-            savePostLocally(postPayload);
+            savePostLocally(title, categoryId, verse, content);
         }
     } else {
-        savePostLocally(postPayload);
+        savePostLocally(title, categoryId, verse, content);
     }
 
     // Resetear formulario
@@ -478,10 +513,16 @@ window.saveNewPost = async function() {
     if (document.getElementById('newPostContent')) document.getElementById('newPostContent').value = '';
 };
 
-function savePostLocally(postPayload) {
+function savePostLocally(title, categoryId, verse, content) {
+    const catInfo = CATEGORY_MAP[categoryId] || { name: 'Devocional', color: 'amber' };
     const newPost = {
         id: Date.now(),
-        ...postPayload,
+        title,
+        category: catInfo.name,
+        badge_color: catInfo.color,
+        author_name: 'Dirección Manantial',
+        verse: verse || null,
+        content,
         created_at: new Date().toISOString()
     };
     window.AppRadioState.posts.unshift(newPost);
@@ -590,7 +631,6 @@ window.loadFromLocalStorage = function() {
 // INICIALIZACIÓN
 // ==============================================================================
 window.addEventListener('DOMContentLoaded', async () => {
-    // Escuchar cambios de sesión de Supabase si está disponible
     if (supabase) {
         const { data: { session } } = await supabase.auth.getSession();
         if (session) {
