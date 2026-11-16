@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-display: "Outfit", sans-serif;
+
+  --color-celestial-950: #040814;
+  --color-celestial-900: #070d1e;
+  --color-celestial-850: #0c1735;
+  --color-celestial-800: #11224d;
+  --color-celestial-700: #17306e;
+  --color-celestial-600: #1e4090;
+  --color-celestial-500: #2557bd;
+  --color-celestial-400: #38bdf8;
+
+  --color-divine-50: #fffbeb;
+  --color-divine-100: #fef3c7;
+  --color-divine-400: #fbbf24;
+  --color-divine-500: #f59e0b;
+  --color-divine-600: #d97706;
+  --color-divine-700: #b45309;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #070d1e; }
+::-webkit-scrollbar-thumb { background: #1e4090; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
+.touch-manipulation { touch-action: manipulation; }
+
+/* Animación Ecualizador de Audio */
+@keyframes soundBars {
+    0%, 100% { height: 4px; }
+    50% { height: 26px; }
+}
+.bar-1 { animation: soundBars 0.7s infinite ease-in-out; }
+.bar-2 { animation: soundBars 0.5s infinite ease-in-out 0.2s; }
+.bar-3 { animation: soundBars 0.8s infinite ease-in-out 0.4s; }
+.bar-4 { animation: soundBars 0.6s infinite ease-in-out 0.1s; }
+.bar-5 { animation: soundBars 0.9s infinite ease-in-out 0.3s; }
+.paused-bars * { animation-play-state: paused !important; height: 4px !important; }
+
+/* Resplandor Divino */
+.glow-divine {
+    box-shadow: 0 0 45px -5px rgba(245, 158, 11, 0.35);
+}
+.glow-cyan {
+    box-shadow: 0 0 35px -5px rgba(56, 189, 248, 0.25);
+}

@@ -1,0 +1,33 @@
+---
+// StickyPlayer.astro
+---
+<div id="stickyPlayerBar" class="fixed bottom-0 left-0 right-0 z-50 bg-celestial-900/95 backdrop-blur-md border-t border-white/15 px-4 py-2.5 shadow-2xl transition-all">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+        
+        <!-- Info Emisora & Ecualizador -->
+        <div class="flex items-center gap-3">
+            <button type="button" onclick="window.togglePlayRadio()" id="stickyPlayBtn" class="w-10 h-10 rounded-full bg-amber-500 hover:bg-amber-400 active:scale-90 text-slate-950 flex items-center justify-center font-bold text-sm shadow-md transition touch-manipulation shrink-0 cursor-pointer">
+                <i id="stickyPlayIcon" class="fa-solid fa-play ml-0.5"></i>
+            </button>
+            <div class="truncate">
+                <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <h4 class="font-black text-xs text-white truncate">Radio TV Manantial 90.7 FM</h4>
+                </div>
+                <p id="stickyStatus" class="text-[10px] text-slate-400 truncate">Listo para transmitir • Toca reproducir</p>
+            </div>
+        </div>
+
+        <!-- Controles Adicionales (Desktop) -->
+        <div class="hidden sm:flex items-center gap-4">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-volume-low text-xs text-slate-400"></i>
+                <input type="range" min="0" max="1" step="0.05" value="0.9" oninput="window.changeVolume(this.value)" class="w-24 h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-400">
+            </div>
+            <a href="https://wa.me/584226690007?text=Hola%20Radio%20TV%20Manantial" target="_blank" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-[11px] font-bold flex items-center gap-1 transition">
+                <i class="fa-brands fa-whatsapp"></i> Cabina
+            </a>
+        </div>
+
+    </div>
+</div>

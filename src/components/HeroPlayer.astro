@@ -1,0 +1,81 @@
+---
+// HeroPlayer.astro
+---
+<section id="inicio" class="relative py-12 sm:py-20 px-4 overflow-hidden bg-gradient-to-b from-celestial-900 via-celestial-950 to-celestial-950">
+    <!-- Luces y Fondos Decorativos Celestiales -->
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-sky-600/15 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute top-1/3 -right-20 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto relative z-10 text-center">
+        
+        <!-- Etiqueta Lema -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-amber-300 mb-6 backdrop-blur-sm">
+            <i class="fa-solid fa-dove text-white"></i>
+            <span>"Ríos de agua viva para salvación" — Juan 7:38</span>
+        </div>
+
+        <h1 class="font-display font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-tight mb-4">
+            La Voz de la Fe y la Esperanza en <span class="bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 bg-clip-text text-transparent">90.7 FM</span>
+        </h1>
+
+        <p class="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+            Transmitiendo alabanzas celestiales, palabra de Dios viva y compañía espiritual las 24 horas del día. Conéctate a nuestra señal digital desde cualquier parte del mundo.
+        </p>
+
+        <!-- TARJETA PRINCIPAL DEL REPRODUCTOR EN VIVO -->
+        <div class="max-w-xl mx-auto bg-celestial-900/80 border border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden glow-divine">
+            
+            <!-- Decoración Fondo de Ondas -->
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-sky-500/5 to-amber-500/5 pointer-events-none"></div>
+
+            <div class="relative z-10 flex flex-col items-center">
+                
+                <!-- Estado de la Emisión -->
+                <div class="flex items-center gap-2 mb-4">
+                    <span id="playerPulseDot" class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-md"></span>
+                    <span id="playerStatusText" class="text-xs font-black uppercase tracking-wider text-emerald-400">
+                        SEÑAL EN DIRECTO DISPONIBLE
+                    </span>
+                </div>
+
+                <!-- Botón Gigante de Reproducción con Resplandor Ámbar -->
+                <button type="button" onclick="window.togglePlayRadio()" id="mainPlayBtn" class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-tr from-amber-500 via-amber-400 to-amber-300 hover:scale-105 active:scale-95 text-slate-950 text-2xl sm:text-3xl font-black shadow-2xl flex items-center justify-center transition-all duration-300 touch-manipulation my-2 cursor-pointer">
+                    <i id="mainPlayIcon" class="fa-solid fa-play ml-1"></i>
+                </button>
+
+                <!-- Ecualizador de Audio Animado -->
+                <div id="equalizerContainer" class="flex items-end justify-center gap-1.5 h-8 my-3 paused-bars">
+                    <span class="w-1.5 bg-amber-400 rounded-full bar-1"></span>
+                    <span class="w-1.5 bg-sky-400 rounded-full bar-2"></span>
+                    <span class="w-1.5 bg-amber-300 rounded-full bar-3"></span>
+                    <span class="w-1.5 bg-sky-300 rounded-full bar-4"></span>
+                    <span class="w-1.5 bg-amber-400 rounded-full bar-5"></span>
+                </div>
+
+                <!-- Datos del Stream -->
+                <h3 class="text-base sm:text-lg font-black text-white mt-1">Radio TV Manantial 90.7 FM</h3>
+                <p id="streamInfoSubtitle" class="text-xs text-slate-400 font-medium mt-0.5">
+                    Transmisión en Audio Digital HD (96 kbps Stereo)
+                </p>
+
+                <!-- Control de Volumen y Controles Auxiliares -->
+                <div class="w-full max-w-xs flex items-center justify-center gap-3 mt-6 pt-5 border-t border-white/10">
+                    <button type="button" onclick="window.toggleMute()" id="muteBtn" class="text-slate-400 hover:text-white transition text-sm p-1.5 cursor-pointer">
+                        <i id="muteIcon" class="fa-solid fa-volume-high"></i>
+                    </button>
+                    <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.9" oninput="window.changeVolume(this.value)" class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-400">
+                    <span id="volumePercent" class="text-[11px] font-bold text-slate-400 w-8 text-right">90%</span>
+                </div>
+
+                <!-- Enlace Directo para Reproductores Externos -->
+                <div class="mt-4 pt-3 flex items-center gap-2 text-[11px] text-slate-400">
+                    <span>¿Problemas para escuchar?</span>
+                    <a href="https://radio.conectarservidor.com:8014/stream" target="_blank" class="text-amber-400 hover:text-amber-300 font-bold underline">
+                        Abrir en reproductor externo <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

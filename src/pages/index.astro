@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TopMarquee from '../components/TopMarquee.astro';
+import Header from '../components/Header.astro';
+import HeroPlayer from '../components/HeroPlayer.astro';
+import Schedule from '../components/Schedule.astro';
+import Devotionals from '../components/Devotionals.astro';
+import Directories from '../components/Directories.astro';
+import PrayerContact from '../components/PrayerContact.astro';
+import Footer from '../components/Footer.astro';
+import StickyPlayer from '../components/StickyPlayer.astro';
+import AdminModal from '../components/AdminModal.astro';
+---
+
+<Layout>
+    <TopMarquee />
+    <Header />
+    <main>
+        <HeroPlayer />
+        <Schedule />
+        <Devotionals />
+        <Directories />
+        <PrayerContact />
+    </main>
+    <Footer />
+    <StickyPlayer />
+    <AdminModal />
+</Layout>

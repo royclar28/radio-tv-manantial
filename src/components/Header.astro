@@ -1,0 +1,74 @@
+---
+// Header.astro
+---
+<header class="bg-celestial-900/90 backdrop-blur-md sticky top-0 z-40 border-b border-white/10 shadow-xl">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+        
+        <!-- Logotipo Emblemático SVG de Alta Fidelidad -->
+        <a href="#inicio" class="flex items-center gap-3 group">
+            <div class="relative w-11 h-11 shrink-0">
+                <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md group-hover:scale-105 transition-transform duration-300">
+                    <defs>
+                        <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#0c1735" />
+                            <stop offset="50%" stop-color="#17306e" />
+                            <stop offset="100%" stop-color="#070d1e" />
+                        </linearGradient>
+                        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#fef3c7" />
+                            <stop offset="50%" stop-color="#f59e0b" />
+                            <stop offset="100%" stop-color="#b45309" />
+                        </linearGradient>
+                        <linearGradient id="waterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#bae6fd" />
+                            <stop offset="50%" stop-color="#38bdf8" />
+                            <stop offset="100%" stop-color="#0284c7" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Anillo exterior dorado -->
+                    <circle cx="50" cy="50" r="47" fill="url(#shieldGrad)" stroke="url(#goldGrad)" stroke-width="3" />
+                    <circle cx="50" cy="50" r="42" fill="none" stroke="#f59e0b" stroke-width="0.8" opacity="0.6" stroke-dasharray="2,2" />
+
+                    <!-- Olas de Agua Viva (Manantial) -->
+                    <path d="M 20 65 Q 35 52 50 65 Q 65 78 80 65 L 80 84 Q 50 94 20 84 Z" fill="url(#waterGrad)" opacity="0.85" />
+                    <path d="M 24 72 Q 37 62 50 72 Q 63 82 76 72 L 76 82 Q 50 90 24 82 Z" fill="#e0f2fe" opacity="0.4" />
+
+                    <!-- Cruz Dorada Resplandeciente -->
+                    <rect x="46" y="26" width="8" height="42" rx="1.5" fill="url(#goldGrad)" />
+                    <rect x="34" y="36" width="32" height="8" rx="1.5" fill="url(#goldGrad)" />
+                    <circle cx="50" cy="40" r="14" fill="#fbbf24" opacity="0.35" filter="blur(2px)" />
+
+                    <!-- Paloma de la Paz en la Cima -->
+                    <path d="M 50 16 Q 44 21 40 23 Q 48 24 50 20 Q 52 24 60 23 Q 56 21 50 16 Z" fill="#ffffff" />
+                    <circle cx="50" cy="19" r="2" fill="#fef3c7" />
+                </svg>
+            </div>
+            <div>
+                <span class="font-display font-black text-base sm:text-lg tracking-tight leading-none text-white block">
+                    RADIO TV MANANTIAL
+                </span>
+                <div class="flex items-center gap-1.5 mt-0.5">
+                    <span class="text-xs font-black text-amber-400 tracking-wider">90.7 FM</span>
+                    <span class="text-[10px] text-slate-400 font-semibold">• La Fuente de tu Esperanza</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- Menú de Navegación (Desktop) -->
+        <nav class="hidden md:flex items-center gap-6 text-xs font-bold tracking-wide">
+            <a href="#inicio" class="text-slate-200 hover:text-amber-400 transition">Inicio</a>
+            <a href="#programacion" class="text-slate-300 hover:text-amber-400 transition">Parrilla & Horarios</a>
+            <a href="#noticias" class="text-slate-300 hover:text-amber-400 transition">Mensajes & Blog</a>
+            <a href="#directorios" class="text-slate-300 hover:text-amber-400 transition">Dónde Escucharnos</a>
+            <a href="#contacto" class="text-slate-300 hover:text-amber-400 transition">Peticiones de Oración</a>
+        </nav>
+
+        <!-- Botón Rápido Reproducir (Header) -->
+        <div class="flex items-center gap-2.5">
+            <button type="button" onclick="window.togglePlayRadio()" id="headerPlayBtn" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-95 text-slate-950 font-black px-4 py-2 rounded-xl text-xs shadow-lg transition flex items-center gap-2 touch-manipulation cursor-pointer">
+                <i id="headerPlayIcon" class="fa-solid fa-play"></i>
+                <span id="headerPlayText">Escuchar en Vivo</span>
+            </button>
+        </div>
+    </div>
+</header>

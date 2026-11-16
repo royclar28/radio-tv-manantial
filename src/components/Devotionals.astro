@@ -1,0 +1,31 @@
+---
+// Devotionals.astro
+---
+<section id="noticias" class="py-14 px-4 bg-celestial-950 relative">
+    <div class="max-w-6xl mx-auto">
+        
+        <div class="flex flex-wrap items-end justify-between mb-8 gap-4">
+            <div>
+                <span class="text-xs font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                    <i class="fa-solid fa-book-bible"></i> Palabra & Actualidad
+                </span>
+                <h2 class="font-display font-black text-2xl sm:text-3xl text-white mt-1">
+                    Mensajes, Devocionales y Noticias
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-400 mt-1">Lecturas y anuncios actualizados por la dirección de Radio TV Manantial.</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="window.openAdminModal()" class="px-3.5 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-amber-300 rounded-xl text-xs font-bold transition flex items-center gap-1.5 touch-manipulation cursor-pointer">
+                    <i class="fa-solid fa-pen-to-square"></i> Panel de Redacción
+                </button>
+            </div>
+        </div>
+
+        <!-- Grilla Dinámica de Publicaciones -->
+        <div id="postsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Se llena dinámicamente con JavaScript desde AppRadioState -->
+        </div>
+
+    </div>
+</section>

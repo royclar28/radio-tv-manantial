@@ -1,0 +1,41 @@
+---
+// PrayerContact.astro
+---
+<section id="contacto" class="py-14 px-4 bg-celestial-950 border-t border-white/5">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-gradient-to-br from-celestial-900 to-celestial-850 rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl">
+            <div class="text-center max-w-xl mx-auto mb-8">
+                <span class="text-xs font-black uppercase tracking-wider text-amber-400 block mb-1">
+                    Línea de Oración y Saludos
+                </span>
+                <h2 class="font-display font-black text-2xl sm:text-3xl text-white">
+                    ¿Tienes una Petición de Oración?
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-300 mt-2">
+                    Envía tu mensaje directamente a los locutores y al equipo pastoral para orar por tu vida, tu familia y tus proyectos.
+                </p>
+            </div>
+
+            <form onsubmit="window.sendPrayerWhatsApp(event)" class="space-y-4 max-w-lg mx-auto">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Tu Nombre y Apellido:</label>
+                    <input type="text" id="prayerName" required placeholder="Ej: Hermano Juan Pérez" class="w-full px-3.5 py-2.5 bg-celestial-950 border border-white/15 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Ciudad / País:</label>
+                    <input type="text" id="prayerCity" placeholder="Ej: San Felipe, Venezuela" class="w-full px-3.5 py-2.5 bg-celestial-950 border border-white/15 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Motivo de Oración o Saludo:</label>
+                    <textarea id="prayerMessage" rows="3" required placeholder="Escribe aquí tu petición de oración o saludo para que lo lean al aire..." class="w-full px-3.5 py-2.5 bg-celestial-950 border border-white/15 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-black py-3 rounded-xl text-xs shadow-lg transition flex items-center justify-center gap-2 touch-manipulation cursor-pointer">
+                    <i class="fa-brands fa-whatsapp text-base"></i> Enviar Petición a WhatsApp Cabina
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
