@@ -36,6 +36,9 @@ jobs:
         run: pnpm install --frozen-lockfile=false
 
       - name: Build Astro
+        env:
+          PUBLIC_SUPABASE_URL: "https://zjkdkrjyozcmwyylqnqp.supabase.co"
+          PUBLIC_SUPABASE_ANON_KEY: "sb_publishable_vFvtSkRYGqA_RHUsJc-upA_wjeKHwI7"
         run: pnpm build
 
       - name: Upload artifact
